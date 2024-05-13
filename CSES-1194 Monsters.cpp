@@ -22,24 +22,25 @@ void solve(){
     int n,m;
     cin >> n >> m;
     char g[n][m],v[n][n];
-    queue <pii> q;
+    deque <pii> q;
     rep(i,0,n) {
         rep(j,0,m){
             cin >> g[i][j];
-            if (isalpha(g[i][j])) q.push({i,j});
+            if (g[i][j] == 'A') q.push_back({i,j});
+            if (g[i][j] == 'M') q.push_front({i,j});
         }
     }
     while(!q.empty()){
         //cout <<'g';
         int r = q.front().first, c = q.front().second;
-        q.pop();
+        q.pop_front();
         rep(i,0,4) {
             int rr = r + dr[i];
             int cc = c + dc[i];
             if (rr >= n || rr < 0 || cc >= m || cc < 0) continue;
             if(g[rr][cc] == '.') {
                 //cout <<'f';
-                q.push({rr,cc});
+                q.push_back({rr,cc});
                 if(g[r][c] == 'M') g[rr][cc] = 'M';
                 else g[rr][cc] = dir[i];
             }
